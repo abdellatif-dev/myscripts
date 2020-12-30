@@ -1,9 +1,20 @@
-#! /bin/python3
+#!/bin/python3
 import subprocess as sub
 from sys import argv
 from sys import exit
 from os import geteuid
 from time import sleep
+
+print('''
+        __                                                  
+  _____/ /_  ____ _____  ____ ____  ____ ___  ____ ______   
+ / ___/ __ \/ __ `/ __ \/ __ `/ _ \/ __ `__ \/ __ `/ ___/   
+/ /__/ / / / /_/ / / / / /_/ /  __/ / / / / / /_/ / /__     
+\___/_/ /_/\__,_/_/ /_/\__, /\___/_/ /_/ /_/\__,_/\___/     
+                      /____/ by abdellatif-dev                              
+
+''')
+
 
 if geteuid() != 0:
     exit("must run as root")
@@ -34,6 +45,7 @@ else:
 		print(f"\n{inter} is ready")
 
 	elif argv[1] == "-h":
+		print('''usage: changemac <options> <interfac_name>''')
 		print("""-m XX:XX:XX:XX:XX:XX Set the MAC to XX:XX:XX:XX:XX:XX\n-e Don't change the vendor bytes\n-a Set random vendor MAC of the same kind\n-A random vendor MAC of any kind\n-p Reset to original, permanent hardware MAC\n-r Set fully random MAC\n\n-h for help""")
 
 	elif len(argv) == 4 and argv[1] == "-m":
@@ -53,6 +65,5 @@ else:
 
 		sleep(1)
 		print(f"{inter} is ready")
-
 	else:
 		print('''usage: changemac <options> <interfac_name>\nchangemac -h for help''')
