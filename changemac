@@ -16,6 +16,18 @@ class bcolors:
     UNDERLINE = '\033[4m'
 
 
+help_menu = f"""
+{bcolors.BLUE}{bcolors.BOLD}usage:{bcolors.ENDC}{bcolors.GREEN} changemac <options> <interfac_name>{bcolors.ENDC}
+
+{bcolors.BLUE}{bcolors.BOLD}-e{bcolors.ENDC}{bcolors.GREEN} Don't change the vendor bytes
+{bcolors.BLUE}{bcolors.BOLD}-a{bcolors.ENDC}{bcolors.GREEN} Set random vendor MAC of the same kind
+{bcolors.BLUE}{bcolors.BOLD}-A{bcolors.ENDC}{bcolors.GREEN} random vendor MAC of any kind
+{bcolors.BLUE}{bcolors.BOLD}-p{bcolors.ENDC}{bcolors.GREEN} Reset to original, permanent hardware MAC
+{bcolors.BLUE}{bcolors.BOLD}-r{bcolors.ENDC}{bcolors.GREEN} Set fully random MAC
+
+{bcolors.BLUE}{bcolors.BOLD}-h {bcolors.ENDC}{bcolors.GREEN}for help
+{bcolors.ENDC}"""
+
 print(f'''{bcolors.BLUE} {bcolors.BOLD}
         __                                                  
   _____/ /_  ____ _____  ____ ____  ____ ___  ____ ______   
@@ -27,11 +39,16 @@ print(f'''{bcolors.BLUE} {bcolors.BOLD}
 ''')
 
 
+
 if geteuid() != 0:
     exit(f"{bcolors.FAIL}{bcolors.BOLD}must run as root{bcolors.ENDC}")
 
 else:
-	if len(argv) == 3:
+	if len(argv) == 1:
+		print(f"{bcolors.BLUE}{bcolors.BOLD}available interfaces{bcolors.ENDC}")
+		sub.call("ip -color=auto addr", shell=True)
+		print(help_menu)
+	elif len(argv) == 3:
 		option = argv[1]
 		inter = argv[2]
 		options = ["-e", "-a", "-A", "-p", "-r"]
@@ -56,16 +73,4 @@ else:
 		print(f"{bcolors.GREEN}{bcolors.BOLD}{inter} is ready{bcolors.ENDC}")
 
 	elif argv[1] == "-h":
-		print(f"""
-{bcolors.BLUE}{bcolors.BOLD}usage:{bcolors.ENDC}{bcolors.GREEN} changemac <options> <interfac_name>{bcolors.ENDC}
-
-{bcolors.BLUE}{bcolors.BOLD}-e{bcolors.ENDC}{bcolors.GREEN} Don't change the vendor bytes
-{bcolors.BLUE}{bcolors.BOLD}-a{bcolors.ENDC}{bcolors.GREEN} Set random vendor MAC of the same kind
-{bcolors.BLUE}{bcolors.BOLD}-A{bcolors.ENDC}{bcolors.GREEN} random vendor MAC of any kind
-{bcolors.BLUE}{bcolors.BOLD}-p{bcolors.ENDC}{bcolors.GREEN} Reset to original, permanent hardware MAC
-{bcolors.BLUE}{bcolors.BOLD}-r{bcolors.ENDC}{bcolors.GREEN} Set fully random MAC
-
-{bcolors.BLUE}{bcolors.BOLD}-h {bcolors.ENDC}{bcolors.GREEN}for help
-{bcolors.ENDC}
-""")
-
+		print(help_menu)
