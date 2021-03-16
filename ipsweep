@@ -5,7 +5,7 @@ txtrst=$(tput sgr0) # Text reset
 if [ "$1" == "" ]
 then
     echo -e "${txtred}\033[1mYou forgot an IP address!${txtrst}"
-    echo "Syntax: ./ipsweep 192.168.1"
+    echo "Syntax: ipsweep 192.168.1"
 
 else
     for ip in {1..225}; do
