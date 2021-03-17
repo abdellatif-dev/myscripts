@@ -46,7 +46,7 @@ if geteuid() != 0:
 
 else:
 	if len(argv) == 1:
-		print(f"{bcolors.BLUE}{bcolors.BOLD}available interfaces{bcolors.ENDC}")
+		print(f"{bcolors.BLUE}{bcolors.BOLD}available interfaces:{bcolors.ENDC}")
 		sub.call("ip -color=auto addr", shell=True)
 		print(help_menu)
 	elif len(argv) == 3:
