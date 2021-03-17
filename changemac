@@ -1,9 +1,10 @@
 #!/bin/python3
+
 import subprocess as sub
-from sys import argv
-from sys import exit
+from sys import argv, exit
 from os import geteuid
 from time import sleep
+
 
 class bcolors:
     HEADER = '\033[95m'
@@ -29,11 +30,11 @@ help_menu = f"""
 {bcolors.ENDC}"""
 
 print(f'''{bcolors.BLUE} {bcolors.BOLD}
-        __                                                  
-  _____/ /_  ____ _____  ____ ____  ____ ___  ____ ______   
- / ___/ __ \/ __ `/ __ \/ __ `/ _ \/ __ `__ \/ __ `/ ___/   
-/ /__/ / / / /_/ / / / / /_/ /  __/ / / / / / /_/ / /__     
-\___/_/ /_/\__,_/_/ /_/\__, /\___/_/ /_/ /_/\__,_/\___/     
+        __
+  _____/ /_  ____ _____  ____ ____  ____ ___  ____ ______
+ / ___/ __ \/ __ `/ __ \/ __ `/ _ \/ __ `__ \/ __ `/ ___/
+/ /__/ / / / /_/ / / / / /_/ /  __/ / / / / / /_/ / /__
+\___/_/ /_/\__,_/_/ /_/\__, /\___/_/ /_/ /_/\__,_/\___/
                       /____/ {bcolors.GREEN}{bcolors.UNDERLINE}by abdellatif-dev
 {bcolors.ENDC}
 ''')
