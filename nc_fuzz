@@ -42,5 +42,5 @@ while True:
         s.close()
         sleep(1)
         buffer = buffer + "A"* buffer_len
-    except:
+    except Exception:
         exit(f"{bcolors.GREEN}{bcolors.BOLD}The fuzzing crashed at{bcolors.FAIL} {str(len(buffer))} bytes{bcolors.ENDC}" )

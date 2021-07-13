@@ -5,7 +5,6 @@ from sys import argv, exit
 from os import geteuid
 from time import sleep
 
-
 class bcolors:
     HEADER = '\033[95m'
     BLUE = '\033[94m'
@@ -15,7 +14,6 @@ class bcolors:
     ENDC = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
-
 
 help_menu = f"""
 {bcolors.BLUE}{bcolors.BOLD}usage:{bcolors.ENDC}{bcolors.GREEN} changemac <options> <interfac_name>{bcolors.ENDC}
@@ -32,46 +30,48 @@ help_menu = f"""
 print(f'''{bcolors.BLUE} {bcolors.BOLD}
         __
   _____/ /_  ____ _____  ____ ____  ____ ___  ____ ______
- / ___/ __ \/ __ `/ __ \/ __ `/ _ \/ __ `__ \/ __ `/ ___/
+ / ___/ __ \\/ __ `/ __ \\/ __ `/ _ \\/ __ `__ \\/ __ `/ ___/
 / /__/ / / / /_/ / / / / /_/ /  __/ / / / / / /_/ / /__
-\___/_/ /_/\__,_/_/ /_/\__, /\___/_/ /_/ /_/\__,_/\___/
+\\___/_/ /_/\\__,_/_/ /_/\\__, /\\___/_/ /_/ /_/\\__,_/\\___/
                       /____/ {bcolors.GREEN}{bcolors.UNDERLINE}by abdellatif-dev
 {bcolors.ENDC}
 ''')
 
-
+options = ["-e", "-a", "-A", "-p", "-r"]
 
 if geteuid() != 0:
     exit(f"{bcolors.FAIL}{bcolors.BOLD}must run as root{bcolors.ENDC}")
 
 else:
-	if len(argv) == 1:
-		print(f"{bcolors.BLUE}{bcolors.BOLD}available interfaces:{bcolors.ENDC}")
-		sub.call("ip -color=auto addr", shell=True)
-		print(help_menu)
-	elif len(argv) == 3:
-		option = argv[1]
-		inter = argv[2]
-		options = ["-e", "-a", "-A", "-p", "-r"]
+    if len(argv) == 1:
+        print(f"{bcolors.BLUE}{bcolors.BOLD}available interfaces:{bcolors.ENDC}")
+        sub.call("ip -color=auto addr", shell=True)
+        print(help_menu)
+    elif len(argv) == 3 and argv[1] in options:
+        option = argv[1]
+        inter = argv[2]
 
-		print(f"{bcolors.BLUE}{bcolors.BOLD}changing mac address {inter}{bcolors.ENDC}")
-		sleep(1)
+        print(f"{bcolors.BLUE}{bcolors.BOLD}changing mac address {inter}{bcolors.ENDC}")
+        sleep(1)
 
-		# ifconfig <interfac_name> down
-		sub.call(f"ifconfig {inter} down", shell=True)
+        # ifconfig <interfac_name> down
+        sub.call(f"ifconfig {inter} down", shell=True)
 
-		# macchanger
+        # macchanger
 
-		if option in options:
-			sub.call(f"macchanger {option} {inter}", shell=True)
-		else:
-			sub.call(f"ifconfig {inter} up", shell=True)
-			exit(f"{bcolors.FAIL}{bcolors.BOLD}option {option} is not available{bcolors.ENDC}")
+        if option in options:
+            sub.call(f"macchanger {option} {inter}", shell=True)
+        else:
+            sub.call(f"ifconfig {inter} up", shell=True)
+            exit(f"{bcolors.FAIL}{bcolors.BOLD}option {option} is not available{bcolors.ENDC}")
 
-		sub.call(f"ifconfig {inter} up", shell=True)
+        sub.call(f"ifconfig {inter} up", shell=True)
 
-		sleep(1)
-		print(f"{bcolors.GREEN}{bcolors.BOLD}{inter} is ready{bcolors.ENDC}")
+        sleep(1)
+        print(f"{bcolors.GREEN}{bcolors.BOLD}{inter} is ready{bcolors.ENDC}")
 
-	elif argv[1] == "-h":
-		print(help_menu)
+    elif argv[1] == "--help" or argv[1] == "-h":
+        print(help_menu)
+    else:
+        print(f"{bcolors.FAIL}{bcolors.BOLD}{argv[1]} not a valid option{bcolors.ENDC}")
+        print(help_menu)
